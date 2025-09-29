@@ -14,7 +14,7 @@ import (
 func TestStatsNoStream(t *testing.T) {
 	t.Parallel()
 
-	c, err := client.NewNginxClient(GetAPIEndpoint(t))
+	c, err := client.NewNginxClient(getAPIEndpoint(t))
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}

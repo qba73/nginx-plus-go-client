@@ -33,7 +33,7 @@ var (
 	defaultWeight      = 1
 )
 
-func GetAPIEndpoint(t *testing.T) string {
+func getAPIEndpoint(t *testing.T) string {
 	t.Helper()
 
 	ep := os.Getenv("TEST_API_ENDPOINT")
@@ -43,7 +43,7 @@ func GetAPIEndpoint(t *testing.T) string {
 	return ep
 }
 
-func GetAPIEndpointOfHelper(t *testing.T) string {
+func getAPIEndpointOfHelper(t *testing.T) string {
 	t.Helper()
 
 	ep := os.Getenv("TEST_API_ENDPOINT_OF_HELPER")
@@ -66,7 +66,7 @@ func GetStreamAddress(t *testing.T) string {
 //nolint:paralleltest
 func TestStreamClient(t *testing.T) {
 	c, err := client.NewNginxClient(
-		GetAPIEndpoint(t),
+		getAPIEndpoint(t),
 		client.WithCheckAPI(),
 	)
 	if err != nil {
@@ -317,7 +317,7 @@ func TestStreamClient(t *testing.T) {
 
 func TestStreamUpstreamServer(t *testing.T) {
 	t.Parallel()
-	c, err := client.NewNginxClient(GetAPIEndpoint(t))
+	c, err := client.NewNginxClient(getAPIEndpoint(t))
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -367,7 +367,7 @@ func TestStreamUpstreamServer(t *testing.T) {
 
 //nolint:paralleltest
 func TestClient(t *testing.T) {
-	c, err := client.NewNginxClient(GetAPIEndpoint(t))
+	c, err := client.NewNginxClient(getAPIEndpoint(t))
 	if err != nil {
 		t.Fatalf("Error when creating a client: %v", err)
 	}
@@ -621,7 +621,7 @@ func TestClient(t *testing.T) {
 
 //nolint:paralleltest
 func TestUpstreamServer(t *testing.T) {
-	c, err := client.NewNginxClient(GetAPIEndpoint(t))
+	c, err := client.NewNginxClient(getAPIEndpoint(t))
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -671,7 +671,7 @@ func TestUpstreamServer(t *testing.T) {
 
 //nolint:paralleltest
 func TestStats(t *testing.T) {
-	c, err := client.NewNginxClient(GetAPIEndpoint(t))
+	c, err := client.NewNginxClient(getAPIEndpoint(t))
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -814,7 +814,7 @@ func TestStats(t *testing.T) {
 
 //nolint:paralleltest
 func TestUpstreamServerDefaultParameters(t *testing.T) {
-	c, err := client.NewNginxClient(GetAPIEndpoint(t))
+	c, err := client.NewNginxClient(getAPIEndpoint(t))
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -865,7 +865,7 @@ func TestUpstreamServerDefaultParameters(t *testing.T) {
 
 //nolint:paralleltest
 func TestStreamStats(t *testing.T) {
-	c, err := client.NewNginxClient(GetAPIEndpoint(t))
+	c, err := client.NewNginxClient(getAPIEndpoint(t))
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -945,7 +945,7 @@ func TestStreamStats(t *testing.T) {
 
 //nolint:paralleltest
 func TestStreamUpstreamServerDefaultParameters(t *testing.T) {
-	c, err := client.NewNginxClient(GetAPIEndpoint(t))
+	c, err := client.NewNginxClient(getAPIEndpoint(t))
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -995,7 +995,7 @@ func TestStreamUpstreamServerDefaultParameters(t *testing.T) {
 //nolint:paralleltest
 func TestKeyValue(t *testing.T) {
 	zoneName := "zone_one"
-	c, err := client.NewNginxClient(GetAPIEndpoint(t))
+	c, err := client.NewNginxClient(getAPIEndpoint(t))
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -1094,7 +1094,7 @@ func TestKeyValue(t *testing.T) {
 //nolint:paralleltest
 func TestKeyValueStream(t *testing.T) {
 	zoneName := "zone_one_stream"
-	c, err := client.NewNginxClient(GetAPIEndpoint(t))
+	c, err := client.NewNginxClient(getAPIEndpoint(t))
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -1191,12 +1191,12 @@ func TestKeyValueStream(t *testing.T) {
 
 func TestStreamZoneSync(t *testing.T) {
 	t.Parallel()
-	c1, err := client.NewNginxClient(GetAPIEndpoint(t))
+	c1, err := client.NewNginxClient(getAPIEndpoint(t))
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
 
-	c2, err := client.NewNginxClient(GetAPIEndpointOfHelper(t))
+	c2, err := client.NewNginxClient(getAPIEndpointOfHelper(t))
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -1319,7 +1319,7 @@ func compareStreamUpstreamServers(x []client.StreamUpstreamServer, y []client.St
 
 func TestUpstreamServerWithDrain(t *testing.T) {
 	t.Parallel()
-	c, err := client.NewNginxClient(GetAPIEndpoint(t))
+	c, err := client.NewNginxClient(getAPIEndpoint(t))
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
