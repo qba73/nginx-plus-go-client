@@ -36,7 +36,7 @@ var (
 //nolint:paralleltest
 func TestStreamClient(t *testing.T) {
 	c, err := client.NewNginxClient(
-		GetAPIEndpoint(),
+		getAPIEndpoint(),
 		client.WithCheckAPI(),
 	)
 	if err != nil {
@@ -287,7 +287,7 @@ func TestStreamClient(t *testing.T) {
 
 func TestStreamUpstreamServer(t *testing.T) {
 	t.Parallel()
-	c, err := client.NewNginxClient(GetAPIEndpoint())
+	c, err := client.NewNginxClient(getAPIEndpoint())
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -337,7 +337,7 @@ func TestStreamUpstreamServer(t *testing.T) {
 
 //nolint:paralleltest
 func TestClient(t *testing.T) {
-	c, err := client.NewNginxClient(GetAPIEndpoint())
+	c, err := client.NewNginxClient(getAPIEndpoint())
 	if err != nil {
 		t.Fatalf("Error when creating a client: %v", err)
 	}
@@ -591,7 +591,7 @@ func TestClient(t *testing.T) {
 
 //nolint:paralleltest
 func TestUpstreamServer(t *testing.T) {
-	c, err := client.NewNginxClient(GetAPIEndpoint())
+	c, err := client.NewNginxClient(getAPIEndpoint())
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -641,7 +641,7 @@ func TestUpstreamServer(t *testing.T) {
 
 //nolint:paralleltest
 func TestStats(t *testing.T) {
-	c, err := client.NewNginxClient(GetAPIEndpoint())
+	c, err := client.NewNginxClient(getAPIEndpoint())
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -784,7 +784,7 @@ func TestStats(t *testing.T) {
 
 //nolint:paralleltest
 func TestUpstreamServerDefaultParameters(t *testing.T) {
-	c, err := client.NewNginxClient(GetAPIEndpoint())
+	c, err := client.NewNginxClient(getAPIEndpoint())
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -835,7 +835,7 @@ func TestUpstreamServerDefaultParameters(t *testing.T) {
 
 //nolint:paralleltest
 func TestStreamStats(t *testing.T) {
-	c, err := client.NewNginxClient(GetAPIEndpoint())
+	c, err := client.NewNginxClient(getAPIEndpoint())
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -851,7 +851,7 @@ func TestStreamStats(t *testing.T) {
 
 	// make connection so we have stream server zone stats - ignore response
 	d := &net.Dialer{}
-	_, err = d.DialContext(context.Background(), "tcp", GetStreamAddress())
+	_, err = d.DialContext(context.Background(), "tcp", getStreamAddress())
 	if err != nil {
 		t.Errorf("Error making tcp connection: %v", err)
 	}
@@ -915,7 +915,7 @@ func TestStreamStats(t *testing.T) {
 
 //nolint:paralleltest
 func TestStreamUpstreamServerDefaultParameters(t *testing.T) {
-	c, err := client.NewNginxClient(GetAPIEndpoint())
+	c, err := client.NewNginxClient(getAPIEndpoint())
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -965,7 +965,7 @@ func TestStreamUpstreamServerDefaultParameters(t *testing.T) {
 //nolint:paralleltest
 func TestKeyValue(t *testing.T) {
 	zoneName := "zone_one"
-	c, err := client.NewNginxClient(GetAPIEndpoint())
+	c, err := client.NewNginxClient(getAPIEndpoint())
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -1064,7 +1064,7 @@ func TestKeyValue(t *testing.T) {
 //nolint:paralleltest
 func TestKeyValueStream(t *testing.T) {
 	zoneName := "zone_one_stream"
-	c, err := client.NewNginxClient(GetAPIEndpoint())
+	c, err := client.NewNginxClient(getAPIEndpoint())
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -1161,12 +1161,12 @@ func TestKeyValueStream(t *testing.T) {
 
 func TestStreamZoneSync(t *testing.T) {
 	t.Parallel()
-	c1, err := client.NewNginxClient(GetAPIEndpoint())
+	c1, err := client.NewNginxClient(getAPIEndpoint())
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
 
-	c2, err := client.NewNginxClient(GetAPIEndpointOfHelper())
+	c2, err := client.NewNginxClient(getAPIEndpointOfHelper())
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -1289,7 +1289,7 @@ func compareStreamUpstreamServers(x []client.StreamUpstreamServer, y []client.St
 
 func TestUpstreamServerWithDrain(t *testing.T) {
 	t.Parallel()
-	c, err := client.NewNginxClient(GetAPIEndpoint())
+	c, err := client.NewNginxClient(getAPIEndpoint())
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
@@ -1327,9 +1327,9 @@ func TestUpstreamServerWithDrain(t *testing.T) {
 	}
 }
 
-// GetAPIEndpoint returns the api endpoint.
+// getAPIEndpoint returns the api endpoint.
 // For testing purposes only. The endpoint is set in the Makefile.
-func GetAPIEndpoint() string {
+func getAPIEndpoint() string {
 	ep := os.Getenv("TEST_API_ENDPOINT")
 	if ep == "" {
 		panic("TEST_API_ENDPOINT env variable is not set or empty")
@@ -1337,9 +1337,9 @@ func GetAPIEndpoint() string {
 	return ep
 }
 
-// GetAPIEndpointOfHelper returns the api endpoint of the helper.
+// getAPIEndpointOfHelper returns the api endpoint of the helper.
 // For testing purposes only. The endpoint is set in the Makefile.
-func GetAPIEndpointOfHelper() string {
+func getAPIEndpointOfHelper() string {
 	ep := os.Getenv("TEST_API_ENDPOINT_OF_HELPER")
 	if ep == "" {
 		panic("TEST_API_ENDPOINT_OF_HELPER env variable is not set or empty")
@@ -1347,9 +1347,9 @@ func GetAPIEndpointOfHelper() string {
 	return ep
 }
 
-// GetStreamAddress returns the address of the unavailable stream server.
+// getStreamAddress returns the address of the unavailable stream server.
 // For testing purposes only. The address is set in the Makefile.
-func GetStreamAddress() string {
+func getStreamAddress() string {
 	addr := os.Getenv("TEST_UNAVAILABLE_STREAM_ADDRESS")
 	if addr == "" {
 		panic("TEST_UNAVAILABLE_STREAM_ADDRESS env variable is not set or empty")

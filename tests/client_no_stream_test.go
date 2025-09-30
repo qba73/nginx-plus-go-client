@@ -13,7 +13,7 @@ import (
 // is misconfigured or of the stream block is missing.
 func TestStatsNoStream(t *testing.T) {
 	t.Parallel()
-	c, err := client.NewNginxClient(GetAPIEndpoint())
+	c, err := client.NewNginxClient(getAPIEndpoint())
 	if err != nil {
 		t.Fatalf("Error connecting to nginx: %v", err)
 	}
