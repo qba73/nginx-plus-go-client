@@ -33,36 +33,6 @@ var (
 	defaultWeight      = 1
 )
 
-func getAPIEndpoint(t *testing.T) string {
-	t.Helper()
-
-	ep := os.Getenv("TEST_API_ENDPOINT")
-	if ep == "" {
-		t.Fatal("TEST_API_ENDPOINT env variable is not set or empty")
-	}
-	return ep
-}
-
-func getAPIEndpointOfHelper(t *testing.T) string {
-	t.Helper()
-
-	ep := os.Getenv("TEST_API_ENDPOINT_OF_HELPER")
-	if ep == "" {
-		t.Fatal("TEST_API_ENDPOINT_OF_HELPER env variable is not set or empty")
-	}
-	return ep
-}
-
-func GetStreamAddress(t *testing.T) string {
-	t.Helper()
-
-	addr := os.Getenv("TEST_UNAVAILABLE_STREAM_ADDRESS")
-	if addr == "" {
-		t.Fatal("TEST_UNAVAILABLE_STREAM_ADDRESS env variable is not set or empty")
-	}
-	return addr
-}
-
 //nolint:paralleltest
 func TestStreamClient(t *testing.T) {
 	c, err := client.NewNginxClient(
@@ -881,7 +851,7 @@ func TestStreamStats(t *testing.T) {
 
 	// make connection so we have stream server zone stats - ignore response
 	d := &net.Dialer{}
-	_, err = d.DialContext(context.Background(), "tcp", GetStreamAddress(t))
+	_, err = d.DialContext(context.Background(), "tcp", getStreamAddress(t))
 	if err != nil {
 		t.Errorf("Error making tcp connection: %v", err)
 	}
@@ -1355,4 +1325,31 @@ func TestUpstreamServerWithDrain(t *testing.T) {
 	if !reflect.DeepEqual(server, servers[0]) {
 		t.Errorf("Expected: %v Got: %v", server, servers[0])
 	}
+}
+
+func getAPIEndpoint(t *testing.T) string {
+	t.Helper()
+	ep := os.Getenv("TEST_API_ENDPOINT")
+	if ep == "" {
+		t.Fatal("TEST_API_ENDPOINT env variable is not set or empty")
+	}
+	return ep
+}
+
+func getAPIEndpointOfHelper(t *testing.T) string {
+	t.Helper()
+	ep := os.Getenv("TEST_API_ENDPOINT_OF_HELPER")
+	if ep == "" {
+		t.Fatal("TEST_API_ENDPOINT_OF_HELPER env variable is not set or empty")
+	}
+	return ep
+}
+
+func getStreamAddress(t *testing.T) string {
+	t.Helper()
+	addr := os.Getenv("TEST_UNAVAILABLE_STREAM_ADDRESS")
+	if addr == "" {
+		t.Fatal("TEST_UNAVAILABLE_STREAM_ADDRESS env variable is not set or empty")
+	}
+	return addr
 }
